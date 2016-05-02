@@ -3,9 +3,16 @@
 scores = [3.0, 1.0, 0.2]
 
 import numpy as np 
+
 def softmax(x):
 	"""Compute softmax values for x"""
-	pass	# TODO: Compute and return softmax(x)
+	den = 0
+	for i in x:
+		den += np.exp(i)
+	for i in range(len(x)):
+		x[i] = np.exp(x[i]) / den
+	return x
+
 
 print(softmax(scores))
 
