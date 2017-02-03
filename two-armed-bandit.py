@@ -40,7 +40,7 @@ with graph.as_default():
 with tf.Session(graph=graph) as sess:
 	
 	# Initializes the session
-	tf.initialize_all_variables().run()
+	tf.global_variables_initializer().run()
 	print("Initialized")
 
 	for i in xrange(MAX_EPISODES):
