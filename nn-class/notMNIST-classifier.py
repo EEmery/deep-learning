@@ -3,6 +3,9 @@ import tensorflow as tf
 from six.moves import cPickle as pickle
 from six.moves import range
 
+
+############################# Importa e carrega dados #############################
+
 path = './../assignments/notMNIST.pickle'								# Caminho para arquivo ".pickle" com os dados
 pickle_file = open(path, 'rb')											# Abre o arquivo para leitura-binaria (read binary (rb))
 save = pickle.load(pickle_file)											# Carrega os dados em save
@@ -22,7 +25,8 @@ valid_labels = save['valid_labels']
 # Limpa memoria (ajuda a aliviar a memoria RAM)
 del save
 
-###################################################################################
+
+###################### Variaveis e parametros da arquitetura ######################
 
 # Relacionado aos dados de entrada
 image_size = 28															# 28x28 pixels
@@ -54,7 +58,8 @@ def accuracy(predictions, labels):
 	"""
 	return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1)) / predictions.shape[0])
 
-###################################################################################
+
+############################## Define a Rede Neural ###############################
 
 graph = tf.Graph()
 with graph.as_default():
@@ -96,7 +101,7 @@ with graph.as_default():
 	train_prediction = tf.nn.softmax(output)
 
 
-###################################################################################
+###################### Rotina de treinamento da Rede Neural #######################
 
 with tf.Session(graph=graph) as sess:
 
