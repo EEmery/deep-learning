@@ -36,7 +36,7 @@ num_channels = 1														# Escala de cinza (Grayscale, sem RGB)
 
 # Relacionadas a arquitetura da rede
 num_steps = 2000
-batch_size = 5
+batch_size = 35
 filter_size = 5															# Tamanho do filtro (5x5)
 out_channels = 16														# Numero de channels da imagem da saida da convolucao
 num_hidden = 64															# Numero de neuronios na camada escondida
@@ -149,8 +149,8 @@ with tf.Session(graph=graph) as sess:
 		# Salva os dados numa lista
 		if (step+1)%10 == 0:
 			train_accuracy.append(accuracy(predictions, train_labels))
-			#test_accuracy.append(accuracy(test_prediction.eval(), test_labels))
 			valid_accuracy.append(accuracy(valid_prediction.eval(), valid_labels))
+			test_accuracy.append(accuracy(test_prediction.eval(), test_labels))
 			step_num.append(step)
 
 		# Imprime resultados
@@ -159,7 +159,10 @@ with tf.Session(graph=graph) as sess:
 			print('Taxa de acerto no batch: %.1f%%\n' % accuracy(predictions, train_labels))
 
 	# Ao fim do treinamento, plota graficos com resultados
-	plt.plot(train_accuracy, step_num)
-	#plt.plot(test_accuracy, step_num)
-	plt.plot(valid_accuracy, step_num)
-	#plt.show()
+	plt.plot(step_num, train_accuracy)
+	plt.plot(step_num, valid_accuracy)
+	plt.plot(step_num, test_accuracy)
+	plt.legend(["treino", "validação", "teste"])
+	plt.ylabel("Acuracia em %")
+	plt.xlabel("Ciclos")
+	plt.show()
